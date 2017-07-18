@@ -1,0 +1,245 @@
+@media(min-width: 768px){
+    body{
+        background: #dedede;
+        padding-bottom: 50px;
+        top: 50px;
+    }
+    .navbar-header{
+        width: 16.912%;
+        background: #636665;
+    }
+    .navbar-header .navbar-brand{
+        margin-left: 0!important;
+    }
+    #sideToggle i{
+        line-height: 50px;
+        margin-left: 25px;
+    }
+    .content{
+        position: relative;
+        margin-top: 50px;
+    }
+
+    .sideHide{
+        transform: translateX(-100%);
+    }
+    .grav-img{
+        display: block!important;
+        filter: grayscale(50%);
+    }
+    .side{
+        background: #287c65;
+        color: #efefef;
+        min-height: 100vh;
+        height: auto;
+        padding: 0!important;
+        position: fixed;
+        transition: all 0.35s ease-in-out;
+        overflow-y: auto;
+    }
+
+    .gravatar{
+        position: relative;
+        height: 200px;
+        background: pink;
+        overflow: hidden;
+    }
+    .gravatar p{
+        position: absolute;
+        bottom: 0;
+        background: rgba(0,0,0,0.3);
+        margin: 0;
+        width: 100%;
+        /* padding: 10px; */
+        text-align: center;
+        text-transform: uppercase;
+        height: 50px;
+        display: block;
+    }
+    .gravatar a{
+        color: #efefef;
+        display: block;
+        line-height: 50px;
+    }
+    .gravatar p a:hover{
+        background: rgba(160,218,188,0.3);
+        text-decoration: none;
+        color: #fff;
+    }
+    .side-nav {
+        display: block;
+        /*position: relative;*/
+    }
+     .side .nav li{
+        margin-top: 0!important;
+    }
+    .side > .nav > li a {
+        color: #dedede;
+        margin: 0!important;
+    }
+
+    .side .nav li a span{
+        color: #999;
+    }
+    .side > .nav > li > a:active{
+        background: #ccc;
+    }
+    .side > .nav > li > a:hover,
+    .side > .nav > li > a:focus,
+    .side > .nav > li > a:active{
+        color: #636665;
+    }
+
+    .main{
+        margin-left: 16.7%;
+        padding-bottom: 50px !important;
+        transition: all 0.5s ease-in-out;
+        padding-left: 20px;
+        background: #ddd;
+        box-sizing: border-box;
+        /* width: 80%; */
+    }
+    .mainSlide{
+        transform: translateX(-16%);
+        width: 100%!important;
+    }
+    .toggleUserForm{
+        color: #efefef;
+    }
+    footer{
+        position: fixed!important;
+        bottom: 0!important;
+        background: #cdcdcd;
+        height: 50px;
+    }
+    footer p{
+        line-height: 50px;
+        text-align: center;
+        /* text-shadow: 0 0 1px rgba(0,0,0,0.3); */
+        margin: 0!important;
+    }
+
+}
+@media (max-width: 767px){
+    .grav-img{
+        height: 50px!important;
+        width: auto;
+    }
+    .navbar-header{
+        background: #195343;
+        /* height: 40px; */
+    }
+    #sideToggle{
+        /* left: 50%; */
+         margin-left: 50%; 
+    }
+     .sideHide{
+        transform: translateX(-100%);
+    }
+
+   .side{
+        background: #287c65;
+        color: #efefef;
+        min-height: 100vh;
+        height: auto;
+        padding: 0!important;
+         position: absolute;
+         transition: all 0.35s ease-in-out; 
+         z-index: 1;
+         /* transform: translateX(-100%);  */
+        /* float: left; */
+        width: 80%;
+        top: 125px;
+    }
+    .navbar-brand{
+        text-transform: uppercase;
+    }
+    
+    
+    .gravatar{
+        position: relative;
+    }
+    .grav-img{
+        /*display: none!important;*/
+        filter: grayscale(50%);
+        float: left;
+    }
+    .gravatar a{
+        color: #efefef;
+        display: block;
+        line-height: 50px;
+    }
+    .gravatar p{
+        position: absolute;
+        bottom: 0;
+        background: rgba(0,0,0,0.3);
+        margin: 0;
+        width: 100%;
+        /* padding: 10px; */
+        text-align: center;
+        text-transform: uppercase;
+        height: 50px;
+        display: block!important;
+    }
+    .gravatar p a:hover{
+        background: rgba(160,218,188,0.3);
+        text-decoration: none;
+        color: #fff;
+    }
+    .side .nav {
+        clear: both;
+        /*display: none;*/
+    }
+    .side .nav li{
+        margin-top: 0!important;
+    }
+    .side > .nav > li a {
+        color: #dedede;
+        margin: 0!important;
+    }
+
+    .side .nav li a span{
+        color: #999;
+    }
+    .side > .nav > li > a:active{
+        background: #ccc;
+    }
+    .side > .nav > li > a:hover,
+    .side > .nav > li > a:focus,
+    .side > .nav > li > a:active{
+        color: #636665;
+    }
+    .main{
+        min-height: 100vh;
+        height: 100vh;
+        position: absolute;
+        top: 100px;
+    }
+}
+    /* Table User Style  */
+    /* table, th, td{
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+
+    table tr:nth-child(odd){
+        background: #aaa;
+    }
+    table tr:nth-child(even){
+        background: #fff;
+    } */
+   
+    
+    /* Bootstrap Override  */
+    *{
+        box-sizing: border-box!important;
+    }
+    .navbar{
+        border-radius: 0!important;
+        margin-bottom: 0!important;
+        border: 0!important;
+    }
+    .navbar .container-fluid{
+        padding-left: 0!important;
+    }

@@ -1,0 +1,44 @@
+
+<div style="padding: 30px 0; ">
+        
+    <div class="col-sm-6">
+        
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <a href="javascript:void(0)" class="btn pull-right toggleUserForm"><i class="fa fa-chevron-circle-down fa-2x"></i></a>
+                <h4 class="text-center">Tambah Pengguna</h4>
+                
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <input class="form-control" ng-model="user.email" type="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" ng-model="user.realname" type="text" placeholder="Real Name">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" ng-model="user.username" type="text" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" ng-model="user.password" type="password" placeholder="Password">
+                </div>
+                <button class="btn btn-primary" ng-click="addUser(user)">Tambah</button>
+            </div>
+            <!--<div ng-view="message">
+                {{message}}
+            </div>-->
+        </div>
+
+    </div>
+    <div class="col-sm-4">
+        <h3 style="border-bottom: 1px solid #efefef; padding-bottom: 10px">Daftar Pengguna</h3>
+        <table class="table table-striped" id="user-list">
+            <thead>
+                <tr><th>User Name</th><th>Real Name</th><th>Aksi</th></tr>
+            </thead>
+        <tbody  ng-repeat="user in users">
+                <tr><td>{{user.username}}</td><td>{{user.realname}}</td><td><a href="javascript:void(0)" title="Hapus"><i class="fa fa-trash"></i></a> | <a href="javascript:void(0)" title="Edit"><i class="fa fa-pencil-square-o"></i></a></td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>

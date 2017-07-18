@@ -1,0 +1,6 @@
+<div class="blog-list" ng-repeat="post in posts | orderBy: '-posted'" >
+	<h3 class="postTitle"><a href="/blog/baca/{{post.slug}}">{{post.title | uppercase}}</a></h3>
+	<h6 class="meta-post">{{post.posted}}</h6>
+	<p>{{post.content | limitTo: 70}} ...</p>
+	<hr class="post-border">
+</div>

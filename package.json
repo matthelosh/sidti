@@ -1,0 +1,44 @@
+{
+  "name": "sidti",
+  "version": "1.0.0",
+  "description": "Sistem Inventaris Departemen Teknologi Informasi is a system to inventory with MEAN Stacks",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "sidti",
+    "nodejs"
+  ],
+  "author": "Muhammad Soleh",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.17.1",
+    "cors": "^2.8.3",
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
+    "express-session": "^1.15.2",
+    "gravatar": "^1.6.0",
+    "jsonwebtoken": "^7.4.1",
+    "jwt-simple": "^0.5.1",
+    "lodash": "^4.17.4",
+    "mongodb": "^2.2.26",
+    "mongoose": "^4.9.9",
+    "morgan": "^1.8.1",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1",
+    "slugify": "^1.1.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthelosh/sidti.git"
+  },
+  "bugs": {
+    "url": "https://github.com/matthelosh/sidti/issues"
+  },
+  "homepage": "https://github.com/matthelosh/sidti#readme"
+}

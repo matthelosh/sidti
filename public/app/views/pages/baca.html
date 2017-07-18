@@ -1,0 +1,30 @@
+<div class="baca" ng-repeat="data in post | limitTo: 1">
+	<div class="boxBaca">
+		<h2>{{data.title | uppercase}}</h2>
+		<h6 class="meta-post">{{data.posted | date:"fullDate"}}</h6>
+		<p id="postBody" ng-bind-html="data.content">{{data.content}}</p>
+	</div>
+
+	<div class="formComment" ng-controller="postComment">
+		<form ng-submit="postComment(comment, data.slug)" action="">
+			<input ng-model="comment.email" type="text" placeholder="Email" required="true">
+			<textarea ng-model="comment.body" name="" id="" cols="20" rows="5" placeholder="Isi Komentar" required="true"></textarea>
+			<button type="submit">Beri Komentar!</button>
+		</form>
+	</div>
+	<hr>
+	<div class="commentList">
+		<div class="commentItem" ng-repeat="comment in data.comments | orderBy: '-_id'">
+
+			<h4 >{{comment.by}}</h4>
+			<p>{{comment.body}}</p>
+		</div>
+	</div>
+	<div class="newComment" ng-model="getComment">
+		<div>
+			<h4>{{data.comments.by}}</h4>
+			<p>{{data.comments.body}}</p>
+		</div>
+	</div>
+</div>
+
