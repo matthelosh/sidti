@@ -1,7 +1,9 @@
 var User    = require('../models/user');
+var jwt     = require('jsonwebtoken');
 var slugify = require('slugify');
 var Post    = require('../models/blog');
 var Barang  = require('../models/barang');
+var secret  = 'culip2511';
 module.exports = function(router){
   router.post('/users', function(req, res){
     console.log(req.body.username);
@@ -12,6 +14,7 @@ module.exports = function(router){
     user.email    = req.body.email;
     if (req.body.username == null || req.body.username == "" || req.body.password == '' || req.body.email == '' || req.body.realname == '') {
       res.json({ success: false, message:'Ensure username, password and email were provided' })
+      
     } else {
       user.save((err)=>{
         if(err){
@@ -24,6 +27,30 @@ module.exports = function(router){
 
   });
 
+// Login Route
+  router.post('/authenticate', function(req, res){
+    User.findOne({ username: req.body.username}).select('email username password').exec(function(err,user){
+      if (err) throw err;
+
+      if(!user){
+        res.json({success: false, message: 'user not found'});
+      } else if (user) {
+        if(req.body.password) {
+          var validPassword = user.comparePassword(req.body.password);
+        } else {
+          res.json({ success: false, message: "Password not provided yet"});
+        }
+        
+        if(!validPassword) {
+          res.json({ success: false, message:'Password is wrong'});
+        } else {
+          var token = jwt.sign({ username: user.username, realname: user.realname, email: user.email }, secret, { expiresIn: '24h'} );
+          res.json({success: true, message: 'Pengguna boleh masuk. Tebentar . .', token: token});
+        }
+      }
+    });
+  });
+
   // router.get('/', function(req, res){
   //   res.send('Route API');
   // });
@@ -33,7 +60,19 @@ module.exports = function(router){
       if(err) throw err;
       else{
         // console.log(users);
-        res.send(users);
+        res.json(users);
+      }
+    });
+  });
+
+  router.delete('/users/:username', function(req, res){
+    var user = req.params.username;
+    User.findOneAndRemove({ username: user}, function(err, success){
+      if (err) return res.send(err);
+      if (success) {
+        res.json({ success: true, message: "User "+ user +" berhasil dihapus"});
+      } else {
+        res.json({ success: false, message: "User "+ user +" gagal dihapus" });
       }
     });
   });
@@ -69,19 +108,25 @@ module.exports = function(router){
         }
       )
   });
-
-  router.post('/post', function(req, res){
+// Route Barang
+  router.post('/barang', function(req, res){
     // console.log(req.body);
-    var slug = slugify(req.body.title);
-    var post = new Post();
-    post.title = req.body.title;
-    post.slug = slug;
-    post.content = req.body.content;
-    post.save(function(err){
+    // var slug = slugify(req.body.title);
+    var barang = new Barang();
+    barang._id = req.body._id;
+    barang.namaBarang = req.body.namaBarang;
+    barang.kategori = req.body.kategori;
+    barang.lokasi = req.body.lokasi;
+    barang.spesifikasi = req.body.spesifikasi;
+    barang.imgBarang = req.body.imgBarang;
+    barang.statusBarang = req.body.statusBarang;
+    barang.kondisi = req.body.kondisi;
+    barang.keterangan = req.body.keterangan;
+    barang.save(function(err){
       if(err){
         res.send(err);
       }else{
-        res.json(slug);
+        res.json(barang);
       }
     });
 
@@ -120,22 +165,22 @@ module.exports = function(router){
   });
 
 // API untuk Inventaris
-  router.post('/barang', function(req, res){
-    var barang = new Barang();
-    barang._id = req.body._id;
-    barang.namaBarang = req.body.namaBarang;
-    if(barang._id == null || barang._id == "" || req.body.namaBarang == "" || req.body.namaBarang == null){
-      res.send('ID Barang atau nama barang harus diisi');
-    } else {
-      barang.save(function(err){
-        if (err){
-          res.send(err);
-        }else{
-          res.send('Barang berhasil disimpan');
-        }
-      });
-    }
-  });
+  // router.post('/barang', function(req, res){
+  //   var barang = new Barang();
+  //   barang._id = req.body._id;
+  //   barang.namaBarang = req.body.namaBarang;
+  //   if(barang._id == null || barang._id == "" || req.body.namaBarang == "" || req.body.namaBarang == null){
+  //     res.send('ID Barang atau nama barang harus diisi');
+  //   } else {
+  //     barang.save(function(err){
+  //       if (err){
+  //         res.send(err);
+  //       }else{
+  //         res.send('Barang berhasil disimpan');
+  //       }
+  //     });
+  //   }
+  // });
   
   router.get('/barang', function(req, res){
     Barang.find({}, function(err, barangs){

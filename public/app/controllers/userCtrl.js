@@ -1,31 +1,25 @@
-angular.module('userControllers', ['userServices'])
+angular.module("userControllers", ['userServices'])
+  .controller('regCtrl', function($http, User) {
+    var app = this;
+    this.regUser = function(regData){
+      User.create(app.regData).then(function(data){ 
+          console.log(data.data.message);
+            app.message = data.data.message;
+            app.regData = '';
+      });
+    };
 
-.controller('regCtrl', function($http, $location, $timeout, User){
+    this.getUser = function(){
+      User.get().then(function(users){
+        app.users = users.data;
+      });
+    };
 
-  var app = this;
-
-  this.regUser = function(regData){
-    app.loading = true;
-    app.errMsg = false;
-
-    User.create(app.regData).then(function(data){
-      console.log(data.data.success);
-      console.log(data.data.message);
-
-      if(data.data.success){
-        app.loading = false;
-        app.successMsg = data.data.message + '...Redirecting';
-        $timeout(function () {
-          $location.path('/');
-        }, 2000);
-
-      } else {
-        app.loading = false;
-        app.errMsg = data.data.message;
-      }
-    });
-  };
-
-});
-
-//http://localhost:3784/api/users
+    this.remUser = function(username){
+      // console.log(username);
+      User.remove(username).then(function(data){
+        var msg = data.data.message;
+        alert(msg);
+      });
+    }
+  });

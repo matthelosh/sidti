@@ -1,32 +1,34 @@
-// angular.module('appRoutes', ['ngRoute'])
+angular.module('appRoutes', ['ngRoute'])
+    .config(function($routeProvider, $locationProvider){
+        $routeProvider
+            .when('/', {
+                templateUrl: "app/views/pages/home.html"
+            })
 
-// .config(function($routeProvider, $locationProvider){
-//   $routeProvider
+            .when('/about', {
+                templateUrl: "app/views/pages/about.html"
+            })
+            .when('/pengguna', {
+                templateUrl: "app/views/pages/users.html",
+                controller: 'regCtrl',
+                controllerAs: 'register'
+            })
+            .when('/login', {
+                templateUrl: "app/views/pages/users/login.html"
+            })
+            .when('/logout', {
+                templateUrl: "app/views/pages/users/logout.html"
+            })
+            .when('/barang',{
+                templateUrl: "app/views/pages/inventaris/barang.html",
+                controller: 'brgCtrl'
+            })
+            .otherwise({
+                templateUrl: "app/views/404.html"
+            });
 
-//   .when('/', {
-//     templateUrl: 'app/views/pages/home.html'
-//   })
-
-//   .when('/about', {
-//     templateUrl: 'app/views/pages/about.html'
-//   })
-
-//   .when('/register', {
-//     templateUrl:  'app/views/pages/users/register.html',
-//     controller: 'regCtrl',
-//     controllerAs: 'register'
-//   })
-
-//   .when('/blog', {
-//     templateUrl: 'app/views/pages/blog.html',
-//     controller: 'blogCtrl',
-//     controllerAs: 'blog'
-//   })
-
-//   .otherwise( { redirectTo: '/'} );
-
-//   $locationProvider.html5Mode({
-//     enabled: true,
-//     requireBase: false
-//   });
-// });
+            $locationProvider.html5Mode({
+                enabled: true,
+                requireBase: false
+            });
+    });

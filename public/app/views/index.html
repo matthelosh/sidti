@@ -22,10 +22,25 @@
 
 		<!-- App AngularJS -->
 		<script src="app/app.js"></script>
-		<!-- <script src="app/routes.js"></script> -->
+
+		<!-- App Routes-->
+		<script src="app/routes.js"></script> 
+
+		<!-- App Controllers -->
+		<script src="app/controllers/mainCtrl.js"></script>
+		<script src="app/controllers/userCtrl.js"></script>
+		<script src="app/controllers/barangCtrl.js"></script>
+		
+
+		<!-- App Services -->
+		<script src="app/services/userService.js"></script>
+		<script src="app/services/authServices.js"></script>
+
+		<!-- Angular-UI-Bootstrap -->
+		<!--<script src="http://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.2.0.js"></script>-->
 		
 	</head>
-	<body ng-app="sidtiApp">
+	<body ng-app="sidtiApp" ng-controller="mainCtrl as main">
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -38,14 +53,16 @@
 					&nbsp; Siidti
 					</a>
 				</div>
-				<span class="nav navbar-nav navbar-left" id="sideToggle">
-					<a href="javascript:void(0)" ><i class="fa fa-toggle-on fa-2x"></i></a>
+				<span class="nav navbar-nav navbar-left" id="sideToggle" >
+					<a href="#" ng-click="sideToggle()"><i  ng-class="toggleClass ? 'fa fa-toggle-on fa-2x' : 'fa fa-toggle-off fa-2x'"></i></a>
 				</span>
 
 				<div class="collapse navbar-collapse navbar-right" id="siNavbar">
 					<ul class="nav navbar-nav">
 						<li class="active"><a href="/" title="Beranda"><i class="fa fa-home"></i></a></li>
 						<li><a href="/about" title="Tentang Sidti"><i class="fa fa-info"></i></a></li>
+						<!-- <li><a href="/login" title="Tentang Sidti"><i class="fa fa-sign-in"></i></a></li> -->
+						<li><a href="#" title="Login" data-toggle="modal" data-target="#loginModal" data-backdrop="static" ng-model="loginVar" ng-init="loginVar = false" ng-click="loginVar = true"><i class="fa fa-sign-in"></i></a></li>
 						<li><a href="/doc" title="Dokumentasi"><i class="fa fa-file"></i></a></li>
 					</ul>
 				</div>
@@ -54,7 +71,7 @@
 		<!-- Content  -->
 		<div class="row-fluid content">
 			<!-- Side Menu  -->
-			<div class="col-sm-2 side">
+			<div class="col-sm-2 side" ng-class="sideClass ? 'sideHide' : 'sideShow'">
 				<!-- Gravatar User  -->
 				<div class="gravatar">
 					<img class="grav-img" src="assets/img/profil/kuncen.png" alt="Foto Profil" width="100%">
@@ -64,20 +81,60 @@
 					<li><a href="/pengaturan" title="Pengaturan"><span class="fa fa-cogs"></span> Pengaturan</a></li>
 					<li><a href="/pengguna" title="Pengguna"><span class="fa fa-users"></span> Pengguna</a></li>
 					<li><a href="/barang" title="Inventaris"><span class="fa fa-archive"></span> Inventaris</a></li>
-					<li><a href="/sirkulasi" title="Sirkulasi Barang"><span class="fa fa-archive"></span> Sirkulasi</a></li>
-					<li><a href="/cetak" title="Cetak Dokumen"><span class="fa fa-file"></span> Laporan</a></li>
-					<li><a href="/logout" title="Keluar Sistem"><span class="fa fa-sign-out"></span> Keluar</a></li>
+					<li><a href="/sirkulasi" title="Sirkulasi Barang"><span class="fa fa-refresh"></span> Sirkulasi</a></li>
+					<li><a href="/cetak" title="Cetak Dokumen"><span class="fa fa-print"></span> Laporan</a></li>
+					<li><a href="#" ng-click="main.logout()" title="Keluar Sistem"><span class="fa fa-sign-out"></span> Keluar</a></li>
 				</ul>
 			</div><!-- End Side Menu -->
 
 			<!-- Main Content  -->
-			<div class="col-sm-10 main">
+			<div class="col-sm-10 main" ng-class="mainClass ? 'mainShrink':'mainSlide'">
 				<div class="page {{pageClass}}" ng-view></div>
 			</div>
 		</div>
 		<footer class="footer col-sm-12">
 			<p>Copyright &copy; 2017 Dept. IT SMKN 10 Malang</p>
 		</footer>
+
+		<!-- Modal -->
+		<div class="modal fade" id="loginModal" role="dialog" ng-if="loginVar">
+			<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 style="color:red;"><span class="glyphicon glyphicon-lock"></span> Login</h4>
+				</div>
+				<div class="modal-body">
+				<form role="form" ng-submit="main.dologin(loginData)">
+					<div class="form-group">
+					<label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+					<input type="text" class="form-control" id="usrname" placeholder="Username" ng-model="main.loginData.username">
+					</div>
+					<div class="form-group">
+					<label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+					<input type="text" class="form-control" id="psw" placeholder="Enter password" ng-model="main.loginData.password">
+					</div>
+					
+					<button type="submit" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+				</form>
+				</div>
+				<div class="modal-footer">
+				<button type="submit" class="btn btn-default btn-default center-block" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+				<div class="alert show-hide-message">
+                <b>Info!</b>
+                <p>{{ main.message }}</p>
+            	</div>
+
+				
+				</div>
+			</div>
+			</div>
+		</div> 
+		</div>
+
+
 		<script src="assets/js/jquery-3.2.0.min.js"></script>
 		<script src="assets/js/bootstrap.js"></script>
 		<script src="assets/js/sidti.js"></script> 
