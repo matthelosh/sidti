@@ -40,7 +40,7 @@
 		<!--<script src="http://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.2.0.js"></script>-->
 		
 	</head>
-	<body ng-app="sidtiApp" ng-controller="mainCtrl as main">
+	<body ng-app="sidtiApp" ng-controller="mainCtrl as main" ng-cloak>
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -59,7 +59,7 @@
 
 				<div class="collapse navbar-collapse navbar-right" id="siNavbar">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="">Hi, {{ main.realname }}</a></li>
+						<li class="active"><a ng-show= "main.isLoggedIn" href="/profil" title="Profil {{ main.realname }}">Hi, {{ main.realname }}</a></li>
 						<li><a href="/" title="Beranda"><i class="fa fa-home"></i></a></li>
 						<li><a href="/about" title="Tentang Sidti"><i class="fa fa-info"></i></a></li>
 						<li><a href="/doc" title="Dokumentasi"><i class="fa fa-file"></i></a></li>
@@ -76,7 +76,7 @@
 				<!-- Gravatar User  -->
 				<div class="gravatar">
 					<img class="grav-img" src="assets/img/profil/kuncen.png" alt="Foto Profil" width="100%">
-					<p class="gravatarName"><a href="/profil/pengguna" title="Detail Pengguna">{{main.realname}}</a></p>
+					<p class="gravatarName"><a href="/profil" title="Detail Pengguna">{{main.realname}}</a></p>
 				</div>
 				<ul class="nav nav-stacked">
 					<li><a href="/pengaturan" title="Pengaturan"><span class="fa fa-cogs"></span> Pengaturan</a></li>

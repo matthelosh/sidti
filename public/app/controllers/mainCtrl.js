@@ -2,17 +2,23 @@ angular.module('mainController', ['authServices'])
 
 .controller('mainCtrl', function(Auth, $timeout, $location, $scope, $route, $routeParams, $window,$rootScope){
     var app = this;
+    // app.loadme = false;
     $rootScope.$on('$routeChangeStart', function() {
+            
             if (Auth.isLoggedIn()) {
             console.log('Success: User is logged in');
             Auth.getUser().then(function(data){
                 console.log(data);
                 app.realname = data.data.realname;
+                app.username = data.data.username;
+                app.email = data.data.email;
+                app.loadme = true;
             });
             app.isLoggedIn = true;
             $scope.toggleClass = true;
             $scope.sideClass = !"sideHide";
             $scope.mainClass = "mainSlide";
+            app.loadme = true;
 
         } else {
             console.log('Failure: User is not logged in');
@@ -33,7 +39,7 @@ angular.module('mainController', ['authServices'])
           } else {
              $timeout(function() {
               app.loginData = '';
-              $location.path('/about');
+              $location.path('/profil');
               $window.location.reload();
           }, 2000);
           }
