@@ -1,20 +1,28 @@
 angular.module('mainController', ['authServices'])
 
-.controller('mainCtrl', function(Auth, $timeout, $location, $scope, $route, $routeParams, $window){
+.controller('mainCtrl', function(Auth, $timeout, $location, $scope, $route, $routeParams, $window,$rootScope){
     var app = this;
-        angular.element(document).ready(function() {
+    $rootScope.$on('$routeChangeStart', function() {
             if (Auth.isLoggedIn()) {
             console.log('Success: User is logged in');
+            Auth.getUser().then(function(data){
+                console.log(data);
+                app.realname = data.data.realname;
+            });
+            app.isLoggedIn = true;
             $scope.toggleClass = true;
             $scope.sideClass = !"sideHide";
             $scope.mainClass = "mainSlide";
 
         } else {
             console.log('Failure: User is not logged in');
+            app.username = 'Kisanak';
+            app.isLoggedIn = false;
             $scope.sideClass = "sideHide";
             $scope.mainSlide = "mainSlide";
         }
     });
+    
     
 
     this.dologin = function(loginData) {
@@ -24,7 +32,7 @@ angular.module('mainController', ['authServices'])
             return false;
           } else {
              $timeout(function() {
-              
+              app.loginData = '';
               $location.path('/about');
               $window.location.reload();
           }, 2000);

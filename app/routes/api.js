@@ -29,7 +29,7 @@ module.exports = function(router){
 
 // Login Route
   router.post('/authenticate', function(req, res){
-    User.findOne({ username: req.body.username}).select('email username password').exec(function(err,user){
+    User.findOne({ username: req.body.username}).select('email username password realname').exec(function(err,user){
       if (err) throw err;
 
       if(!user){
@@ -45,12 +45,30 @@ module.exports = function(router){
           res.json({ success: false, message:'Password is wrong'});
         } else {
           var token = jwt.sign({ username: user.username, realname: user.realname, email: user.email }, secret, { expiresIn: '24h'} );
-          res.json({success: true, message: 'Pengguna boleh masuk. Tebentar . .', token: token});
+          res.json({success: true, message: 'Pengguna boleh masuk. Sebentar . .', token: token});
         }
       }
     });
   });
-
+  // Get token decrypted
+  router.use(function(req, res, next) {
+    var token = req.body.token || req.body.query || req.headers['x-access-token'];
+    if (token) {
+      jwt.verify(token, secret, function(err, decoded) {
+        if (err) {
+          res.json({ success: false, message: 'Token invalid'});
+        } else {
+          req.decoded = decoded;
+          next();
+        }
+      });
+    } else {
+      res.json({ success: false, message: 'No Token'})
+    }
+  });
+  router.post('/me', function(req, res){
+    res.send(req.decoded);
+  });
   // router.get('/', function(req, res){
   //   res.send('Route API');
   // });
@@ -77,37 +95,7 @@ module.exports = function(router){
     });
   });
 
-  router.get('/posts', function(req, res){
-    Post
-      .find()
-      .then(
-        function(posts){
-          res.json(posts);
-          // console.log(posts);
-        },
-        function(err){
-          res.sendStatus(400);
-          console.log(err);
-        }
-      )
-  });
-
-  router.get('/baca/:id', function(req, res){
-    var id = req.params.id;
-    console.log(id);
-    Post
-      .find({'slug': id})
-      .then(
-        function(post){
-          console.log(post);
-          res.json(post);
-        },
-        function(err){
-          res.sendStatus(400);
-          console.log(err);
-        }
-      )
-  });
+  
 // Route Barang
   router.post('/barang', function(req, res){
     // console.log(req.body);
@@ -132,55 +120,6 @@ module.exports = function(router){
 
 
   });
-
-  router.post('/postComment/:slug', function(req, res){
-    var slug = req.params.slug;
-    var comEmail = req.body.email;
-    var comBody  = req.body.body;
-
-    Post.findOneAndUpdate({slug:slug}, {
-      "$push":{
-        comments: {by: comEmail, body: comBody}
-      }
-    }, {
-      new: true
-    })
-    .exec(function(err, done){
-      if (err) {
-        res.status(400).send({msg: 'Gagal menambah komen'});
-      }
-      return res.status(200).send(done);
-    });
-  });
-
-  router.get('/getComments/:slug', function(req, res){
-    var slug = req.params.slug;
-
-    Post.find({"slug": slug})
-        .select('comments')
-        .exec(function(err, comments){
-          if (err) return next (err);
-          res.status(200).send(comments);
-        });
-  });
-
-// API untuk Inventaris
-  // router.post('/barang', function(req, res){
-  //   var barang = new Barang();
-  //   barang._id = req.body._id;
-  //   barang.namaBarang = req.body.namaBarang;
-  //   if(barang._id == null || barang._id == "" || req.body.namaBarang == "" || req.body.namaBarang == null){
-  //     res.send('ID Barang atau nama barang harus diisi');
-  //   } else {
-  //     barang.save(function(err){
-  //       if (err){
-  //         res.send(err);
-  //       }else{
-  //         res.send('Barang berhasil disimpan');
-  //       }
-  //     });
-  //   }
-  // });
   
   router.get('/barang', function(req, res){
     Barang.find({}, function(err, barangs){

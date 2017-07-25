@@ -59,11 +59,12 @@
 
 				<div class="collapse navbar-collapse navbar-right" id="siNavbar">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="/" title="Beranda"><i class="fa fa-home"></i></a></li>
+						<li class="active"><a href="">Hi, {{ main.realname }}</a></li>
+						<li><a href="/" title="Beranda"><i class="fa fa-home"></i></a></li>
 						<li><a href="/about" title="Tentang Sidti"><i class="fa fa-info"></i></a></li>
-						<!-- <li><a href="/login" title="Tentang Sidti"><i class="fa fa-sign-in"></i></a></li> -->
-						<li><a href="#" title="Login" data-toggle="modal" data-target="#loginModal" data-backdrop="static" ng-model="loginVar" ng-init="loginVar = false" ng-click="loginVar = true"><i class="fa fa-sign-in"></i></a></li>
 						<li><a href="/doc" title="Dokumentasi"><i class="fa fa-file"></i></a></li>
+						<li><a ng-show="!main.isLoggedIn" href="#" title="Login" data-toggle="modal" data-target="#loginModal" data-backdrop="static" ng-model="loginVar" ng-init="loginVar = false" ng-click="loginVar = true"><i class="fa fa-sign-in"></i></a></li>
+						
 					</ul>
 				</div>
 			</div>
@@ -75,12 +76,12 @@
 				<!-- Gravatar User  -->
 				<div class="gravatar">
 					<img class="grav-img" src="assets/img/profil/kuncen.png" alt="Foto Profil" width="100%">
-					<p class="gravatarName"><a href="/profil/pengguna" title="Detail Pengguna">Nama Pengguna</a></p>
+					<p class="gravatarName"><a href="/profil/pengguna" title="Detail Pengguna">{{main.realname}}</a></p>
 				</div>
 				<ul class="nav nav-stacked">
 					<li><a href="/pengaturan" title="Pengaturan"><span class="fa fa-cogs"></span> Pengaturan</a></li>
 					<li><a href="/pengguna" title="Pengguna"><span class="fa fa-users"></span> Pengguna</a></li>
-					<li><a href="/barang" title="Inventaris"><span class="fa fa-archive"></span> Inventaris</a></li>
+					<li><a href="/inventaris" title="Inventaris"><span class="fa fa-archive"></span> Inventaris</a></li>
 					<li><a href="/sirkulasi" title="Sirkulasi Barang"><span class="fa fa-refresh"></span> Sirkulasi</a></li>
 					<li><a href="/cetak" title="Cetak Dokumen"><span class="fa fa-print"></span> Laporan</a></li>
 					<li><a href="#" ng-click="main.logout()" title="Keluar Sistem"><span class="fa fa-sign-out"></span> Keluar</a></li>

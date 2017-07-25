@@ -19,7 +19,7 @@ angular.module('appRoutes', ['ngRoute'])
             .when('/logout', {
                 templateUrl: "app/views/pages/users/logout.html"
             })
-            .when('/barang',{
+            .when('/inventaris',{
                 templateUrl: "app/views/pages/inventaris/barang.html",
                 controller: 'brgCtrl'
             })
