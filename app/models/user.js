@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
     bcrypt = require('bcrypt-nodejs'),
+    titlize = require('mongoose-title-case'),
     Schema   = mongoose.Schema;
 
 var UserSchema = new Schema({
@@ -19,21 +20,12 @@ UserSchema.pre('save', function(next){
   });
 });
 
+UserSchema.plugin(titlize, {
+  paths: ['realname']
+});
+
 UserSchema.methods.comparePassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
 
 module.exports = mongoose.model('User', UserSchema);
-
-// var blogSchema = new Schema({
-//   title: String,
-//   author: String,
-//   body: String,
-//   comments: [{body: String, date: Date}],
-//   date: { type: Date, default: Date.now},
-//   hidden: Boolean,
-//   meta: {
-//     votes: Number,
-//     favs: Number
-//   }
-// });

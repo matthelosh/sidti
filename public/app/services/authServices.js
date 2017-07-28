@@ -2,6 +2,7 @@ angular.module('authServices', [])
 .factory('Auth', function($http, AuthToken){
     var authFactory = {};
 
+    // Auth.login();
     authFactory.login = function(loginData){
         return $http.post('/api/authenticate', loginData).then(function(data){
             // console.log(data.data.token);
@@ -54,7 +55,7 @@ angular.module('authServices', [])
         
     };
 
-    // AuthToken.getToke();
+    // AuthToken.getToken();
     authTokenFactory.getToken = function(){
         return $window.localStorage.getItem('token');
     };

@@ -1,7 +1,7 @@
 var User    = require('../models/user');
 var jwt     = require('jsonwebtoken');
 var slugify = require('slugify');
-var Post    = require('../models/blog');
+// var Post    = require('../models/blog');
 var Barang  = require('../models/barang');
 var secret  = 'culip2511';
 module.exports = function(router){
@@ -44,7 +44,7 @@ module.exports = function(router){
         if(!validPassword) {
           res.json({ success: false, message:'Password is wrong'});
         } else {
-          var token = jwt.sign({ username: user.username, realname: user.realname, email: user.email }, secret, { expiresIn: '24h'} );
+          var token = jwt.sign({ username: user.username, realname: user.realname, email: user.email }, secret, { expiresIn: '10h'} );
           res.json({success: true, message: 'Pengguna boleh masuk. Sebentar . .', token: token});
         }
       }
