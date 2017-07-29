@@ -4,7 +4,8 @@ var mongoose = require('mongoose'),
 var barangSchema = new Schema({
     _id : {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     namaBarang: {
         type: String,
@@ -15,19 +16,14 @@ var barangSchema = new Schema({
         ref: 'kategori'
     },
     lokasi: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'lokasi'
     },
-    spesifikasi: {
-        merk: String,
-        tipe: String,
-        satuan: String,
-        vga: String
-    },
+    spesifikasi: String,
     imgBarang: String,
     statusBarang: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'status'
+        ref: 'statusBarang'
     },
     kondisi: {
         lengkap: Boolean,

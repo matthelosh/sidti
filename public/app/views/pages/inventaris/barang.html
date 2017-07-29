@@ -9,32 +9,31 @@
     </div>
     <br>
     <div class="row-fluid" ng-show="frmBarang" id="frmBarang">
-        <form class="form" ng-submit="">
+        <form class="form" ng-submit="barang.regBarang(dataBarang)">
             <div class="col-sm-8">
                 <div class="panel panel-primary" >
                     <div class="panel-heading">
                         <h4>Data Barang</h4>
-
                     </div>
                     <div class="panel-body">
                         <div class="form-group">
                             <label for="idBarang" class="col-sm-4">ID Barang:</label>
                             <div class="col-sm-8">
-                                <input ng-model="regBarang.idBarang" class="form-control" id="idBarang" placeholder="ID Barang">
+                                <input type="text" ng-model="barang.dataBarang.idBarang" class="form-control" id="idBarang" placeholder="ID Barang">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="namaBarang" class="col-sm-4">Nama Barang:</label>
                             <div class="col-sm-8">
-                                <input ng-model="regBarang.namaBarang" class="form-control" id="namaBarang" placeholder="Nama Barang">
+                                <input ng-model="barang.dataBarang.namaBarang" class="form-control" id="namaBarang" placeholder="Nama Barang">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="spesifikasi" class="col-sm-4">Spesifikasi:</label>
                             <div class="col-sm-8">
-                                <textarea ng-model="regBarang.kategori" class="form-control" id="kategori" placeholder="Kategori: Pisahkan dengan koma (contoh: Intel core i3 1.5GHz, RAM DDR3 4GB, HDD 500GB SATA)">
+                                <textarea ng-model="barang.dataBarang.spesifikasi" class="form-control" id="kategori" placeholder="Kategori: Pisahkan dengan koma (contoh: Intel core i3 1.5GHz, RAM DDR3 4GB, HDD 500GB SATA)" rows="8">
                                 </textarea>
                             </div>
                         </div>
@@ -42,14 +41,26 @@
                         <div class="form-group">
                             <label for="imgBarang" class="col-sm-4">Gambar Barang:</label>
                             <div class="col-sm-8">
-                                <input ng-model="regBarang.imgBarang" class="form-control" type="file" id="imgBarang" placeholder="ID Barang">
+                                <input ng-model="barang.dataBarang.imgBarang" class="form-control" type="file" id="imgBarang" placeholder="ID Barang">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="kondisi" class="col-sm-4">Kondisi:</label>
+                            <div class="col-sm-8">
+                                <div class="checkbox">
+                                    <label><input type="checkbox" value="true" ng-model="barang.dataBarang.kondisi.baik">Baik</label>
+</div>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" value="true" ng-model="barang.dataBarang.kondisi.lengkap">Lengkap</label>
+</div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="ketBarang" class="col-sm-4">Keterangan:</label>
                             <div class="col-sm-8">
-                                <input ng-model="regBarang.ketBarang" class="form-control" id="ketBarang" placeholder="Keterangan">
+                                <textarea ng-model="barang.dataBarang.ketBarang" class="form-control" id="ketBarang" placeholder="Keterangan" rows="4"></textarea>
                             </div>
                         </div>
                     </div>
@@ -57,38 +68,44 @@
             </div>
 
             <div class="col-sm-4">
-                <div class="panel panel-info">
+                <div class="panel panel-success">
                     <div class="panel-heading">
                         <h4>Data Penunjang</h4>
                     </div>
                     <div class="panel-body">
                         <div class="form-group">
                             <label for="kategori">Kategori</label>
-                            <select class="form-control" id="kategori">
-                                <option value="0">Kategori Barang</option>
-                                <option value="1">TI</option>
-                                <option value="2">Elektronika</option>
-                                <option value="3">Furniture</option>
-                                <option value="4">Alat Praktek</option>
+                            <select class="form-control" id="kategori" ng-model="barang.dataBarang.kategori" ng-options="kategori._id as kategori.namaKategori for kategori in kategoris">
+                                <option value="" selected> -Pilih Kategori- </option>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="lokasi">Lokasi</label>
-                            <select class="form-control" id="lokasi">
-                                <option value="0">Lab TI 01</option>
-                                <option value="1">Lab TI 02</option>
-                                <option value="2">Lab TI 03</option>
-                                <option value="3">Lab TI 04</option>
-                                <option value="4">Lab TI 05</option>
+                            <select class="form-control" id="lokasi" ng-model="barang.dataBarang.lokasi" ng-options="lokasi.kode as lokasi.namaLokasi for lokasi in lokasis">
+                                <option value="" selected> -Pilih Lokasi Barang- </option>
                             </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select class="form-control" id="status" ng-model="barang.dataBarang.status" ng-options="status._id as status.status for status in statuses">
+                                <option value="" selected> -Pilih Status Barang- </option>
+                            </select>
+                        </div>
+                        <div class="alert alert-info" >
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <h4>Info: <small><br>{{ barang.info }}</small></h4>
                         </div>
 
                     </div>
                 </div>
             </div>
+            <div class="col-sm-12">
+                <button class="btn btn-primary center-block" type="submit">Simpan</button>
+            </div>
         </form>
-
+        <hr>
     </div>
 
     
@@ -126,14 +143,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="data in dataBarang | orderBy:orderProperty">
+                    <tr ng-repeat="data in barangs | orderBy:orderProperty">
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ data.kodeBarang}}</td>
+                        <td>{{ data._id}}</td>
                         <td>{{ data.namaBarang }}</td>
                         <td>{{ data.kategori }}</td>
                         <td>{{ data.lokasi }}</td>
                         <td>{{ data.kondisi.baik}} | {{ data.kondisi.lengkap }}</td>
-                        <td>{{ data.status }}</td>
+                        <td>{{ data.statusBarang }}</td>
                     </tr>
                 </tbody>
             </table>

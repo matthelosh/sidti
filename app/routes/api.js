@@ -3,7 +3,9 @@ var jwt     = require('jsonwebtoken');
 var slugify = require('slugify');
 // var Post    = require('../models/blog');
 var Barang  = require('../models/barang');
+var Penunjang = require('../models/penunjang')(Penunjang);
 var secret  = 'culip2511';
+
 module.exports = function(router){
   router.post('/users', function(req, res){
     console.log(req.body.username);
@@ -95,37 +97,62 @@ module.exports = function(router){
     });
   });
 
-  
-// Route Barang
+  // Route Get Kategori, Lokasi, Status
+  router.get('/kategori', function(req, res) {
+    Penunjang.Kategori.find({}, function(err, kategoris) {
+      res.json(kategoris);
+    });
+  });
+
+  router.get('/lokasi', function(req, res) {
+    Penunjang.Lokasi.find({}, function(err, lokasis){
+      res.json(lokasis);
+    });
+  });
+
+  router.get('/status', function(req, res) {
+    Penunjang.Status.find({}, function(err, statuses) {
+      res.json(statuses);
+    });
+  });
+
+
+  // Route Barang
   router.post('/barang', function(req, res){
     // console.log(req.body);
     // var slug = slugify(req.body.title);
     var barang = new Barang();
-    barang._id = req.body._id;
+    barang._id = req.body.idBarang;
     barang.namaBarang = req.body.namaBarang;
     barang.kategori = req.body.kategori;
     barang.lokasi = req.body.lokasi;
     barang.spesifikasi = req.body.spesifikasi;
-    barang.imgBarang = req.body.imgBarang;
-    barang.statusBarang = req.body.statusBarang;
+    // barang.imgBarang = req.body.imgBarang;
+    barang.statusBarang = req.body.status;
     barang.kondisi = req.body.kondisi;
-    barang.keterangan = req.body.keterangan;
+    barang.keterangan = req.body.ketBarang;
     barang.save(function(err){
       if(err){
-        res.send(err);
+        // res.send(err);
+        // console.log(err.code);
+        var errCode = err.code;
+        var errMsg = err.message;
+        res.json({ success: false, msg: "Barang dengan kode "+ barang._id + " sudah ada." });
       }else{
-        res.json(barang);
+        // console.log(barang);
+        res.json({success: true, message: barang.namaBarang + ' berhasil disimpan'});
       }
     });
 
 
   });
   
-  router.get('/barang', function(req, res){
-    Barang.find({}, function(err, barangs){
-      if (err){
-        res.send(err);
+  router.get('/barangs', function(req, res){
+    Barang.find({}).populate('Kategori').exec(function(err, barangs) {
+      if (err) {
+        res.json(err);
       } else {
+        console.log(barangs);
         res.json(barangs);
       }
     });

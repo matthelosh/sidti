@@ -28,6 +28,7 @@
     "mongodb": "^2.2.26",
     "mongoose": "^4.9.9",
     "mongoose-title-case": "0.0.4",
+    "mongoose-validator": "^1.3.2",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",

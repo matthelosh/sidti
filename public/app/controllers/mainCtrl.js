@@ -4,7 +4,7 @@ angular.module('mainController', ['authServices'])
     var app = this;
     app.checkSession = function() {
         if (Auth.isLoggedIn()) {
-            app.checkingSession = true;
+            // app.checkingSession = true;
             var interval = $interval(function() {
                 var token = $window.localStorage.getItem('token');
                 if (token == null){
@@ -17,10 +17,10 @@ angular.module('mainController', ['authServices'])
                     }
                     var expireTime = self.parseJwt(token);
                     var timeStamp = Math.floor(Date.now() / 1000);
-                    console.log(expireTime.exp);
-                    console.log(timeStamp);
+                    // console.log(expireTime.exp);
+                    // console.log(timeStamp);
                     var timeCheck = expireTime.exp - timeStamp;
-                    console.log('timecheck: ' + timeCheck);
+                    // console.log('timecheck: ' + timeCheck);
                     if(timeCheck <= 5) {
                         console.log('token has expired');
                         $interval.cancel(interval);
@@ -31,7 +31,7 @@ angular.module('mainController', ['authServices'])
         }
     };
 
-    app.checkSession();
+    // app.checkSession();
 
     
     var showModal = function() {

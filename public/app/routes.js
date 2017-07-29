@@ -28,6 +28,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
             .when('/inventaris',{
                 templateUrl: "app/views/pages/inventaris/barang.html",
                 controller: 'brgCtrl',
+                controllerAs:'barang',
                 authenticated: true
             })
             .otherwise({

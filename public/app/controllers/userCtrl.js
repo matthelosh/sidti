@@ -2,6 +2,7 @@ angular.module("userControllers", ['userServices'])
   .controller('regCtrl', function($http, User) {
     var app = this;
     this.regUser = function(regData){
+      console.log(regData);
       User.create(app.regData).then(function(data){ 
           console.log(data.data.message);
             app.message = data.data.message;

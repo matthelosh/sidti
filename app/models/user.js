@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
     bcrypt = require('bcrypt-nodejs'),
     titlize = require('mongoose-title-case'),
+    validate = require('mongoose-validator'),
     Schema   = mongoose.Schema;
 
 var UserSchema = new Schema({
