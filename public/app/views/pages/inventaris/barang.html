@@ -45,7 +45,7 @@
                     <tr dir-paginate="data in barangs | orderBy:orderProperty | filter:searchBarang | itemsPerPage:10" >
                         <td style="text-align:center">{{ $index + 1 }}</td>
                         <td style="text-align:center">{{ data._id}}</td>
-                        <td><a href="javascript:void(0);" class="btn-detil" ng-click="barang.getDetil(data._id);">{{ data.namaBarang }}</a></td>
+                        <td style="padding: 0!important;"><a href="javascript:void(0);" class="btn-detil" ng-click="barang.getDetil(data._id);" title="Info Detail {{data._id}}">{{ data.namaBarang }}</a></td>
                         <td>{{ data.kategori.namaKategori }}</td>
                         <td>{{ data.lokasi.lokasi }}</td>
                         <td>{{ data.kondisi.baik}} | {{ data.kondisi.lengkap }}</td>
@@ -71,14 +71,14 @@
                 <h3>Formulir {{ frmTitle }}</h3>
             </div>
             <div class="modal-body">
-                <form class="form" ng-submit="frmMode? barang.regBarang(dataBarang) : barang.updBarang(dataBarang)">
+                <form class="form">
                     <div class="row">
                         <div class="col-sm-7">
                             
                             <div class="form-group">
                                 <label for="idBarang">Kode:</label>
                                 
-                                <input type="text" ng-model="barang.dataBarang._id" ng-disabled="barang.editMode" class="form-control input-sm" id="idBarang" placeholder="Kode Barang" />
+                                <input type="text" ng-model="barang.dataBarang._id" ng-disabled="barang.editBarang" class="form-control input-sm" id="idBarang" placeholder="Kode Barang" />
                                 
                             </div>
                             <div class="form-group">

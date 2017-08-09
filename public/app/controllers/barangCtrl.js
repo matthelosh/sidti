@@ -68,6 +68,12 @@ angular.module('barangController', ['barangServices', 'angularUtils.directives.d
            
         }
 
+        
+
+        app.updBarang = function(dataBarang){
+            console.log(dataBarang);
+        }
+
         app.getDetil = function(_id) {
             Barang.getEditBrg(_id).then(function(brgDetil) {
                 console.log(brgDetil.data);

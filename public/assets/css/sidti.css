@@ -298,7 +298,7 @@
     }
 
     .btn-detil{
-        padding: 5px;
+        padding: 5px 10px;
         background-image: linear-gradient(to right, #287c65, #287c65 50%, rgba(0,0,0,0) 50%,rgba(0,0,0,0));
         background-size: 200% 100%;
         background-position: right center;
