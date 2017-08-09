@@ -47,10 +47,10 @@ app.get('/', function(req, res){
 
 app.use('/api', api);
 
-app.get('*', function(req, res, next){
+app.get('*', function(req, res, next) {
 
   res.sendFile(path.resolve(__dirname + '/public/app/views/index.html'));
 });
-app.listen(port, function(){
+app.listen(port, function() {
   console.log('Running on port ' + port);
 });

@@ -296,3 +296,19 @@
     .form-control {
         border-radius: 1px!important;
     }
+
+    .btn-detil{
+        padding: 5px;
+        background-image: linear-gradient(to right, #287c65, #287c65 50%, rgba(0,0,0,0) 50%,rgba(0,0,0,0));
+        background-size: 200% 100%;
+        background-position: right center;
+        transition: all 0.2s linear;
+        color: #287c65;
+        display: block;
+    }
+    .btn-detil:hover{
+        text-decoration: none;
+        background-position: left center;
+        color: #eee;
+        /* box-shadow: 0 3px 5px rgba(0,0,0,0.5); */
+    }

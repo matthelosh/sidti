@@ -1,4 +1,4 @@
-angular.module('barangController', ['barangServices'])
+angular.module('barangController', ['barangServices', 'angularUtils.directives.dirPagination'])
     .controller('brgCtrl', function($scope, $http, Barang, Penunjang, $window){
         
         $scope.frmBarangShow = function(){
@@ -17,10 +17,14 @@ angular.module('barangController', ['barangServices'])
 
         // Controller for register Barang
         var app = this;
+
+        app.frmMode = true;
        
         this.showFrmBarang = function() {
             $scope.frmTitle = 'Entry Data Barang';
             $scope.submitTitle = "Simpan";
+            app.addBarang = true;
+            app.editBarang = false;
             $("#frmBarang").modal();
         };
         // app.info = "Informasi";
@@ -48,9 +52,9 @@ angular.module('barangController', ['barangServices'])
         this.getEditBrg = function(data_id) {
             Barang.getEditBrg(data_id).then(function(brgEdit) {
                 var brgEdit = brgEdit.data;
-                console.log(brgEdit);
-                // $scope.brgEdit = brgEdit;
-                app.editMode = true;
+                // console.log(brgEdit);
+                app.addBarang = false;
+                app.editBarang = true;
                 $scope.editBarang = brgEdit;
                 $scope.katSelected = brgEdit.kategori._id;
                 $scope.lokSelected = brgEdit.lokasi._id;
