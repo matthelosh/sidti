@@ -312,3 +312,63 @@
         color: #eee;
         /* box-shadow: 0 3px 5px rgba(0,0,0,0.5); */
     }
+
+    #homePage{
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 100000;
+        background: rgba(0,0,0,0.9);
+    }
+
+    #homePage:before {
+        content: "";
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        display: block;
+        background-image: url("../img/bg.jpeg");
+        background-size: cover;
+         -webkit-filter: blur(15px); 
+         
+    }
+
+    #homePage .homeLogo{
+        position: absolute;
+        width: 300px;
+        top: 15%;
+        left: 17%;
+        color: #287c65;
+        font-weight: 700;
+        text-align: center;
+        /* background: #eee; */
+        /* padding: 10px; */
+    }
+
+    #homePage .homeLogo img{
+        width: 200px;
+    }
+    #homePage .homeLogo .desc{
+        display: block;
+        background: #287c65;
+        color: #efefef;
+        padding: 20px;
+        text-transform: uppercase;
+         margin-top: 10px; 
+    }
+    #homePage .loginPanel{
+        position: absolute;
+        width: 300px;;
+        background: #efefef;
+        height: 300px;
+        right: 150px;
+        top: 25%;
+        border-radius: 5px;
+        padding: 20px;
+        box-sizing: border-box;
+    }

@@ -29,6 +29,10 @@ angular.module('barangController', ['barangServices', 'angularUtils.directives.d
         };
         // app.info = "Informasi";
         this.regBarang = function(dataBarang) {
+            app.dataBarang.kategori = $scope.katSelected;
+            app.dataBarang.lokasi = $scope.lokSelected;
+            app.dataBarang.statusBarang = $scope.statSelected;
+
             Barang.create(app.dataBarang).then(function(msg) {
                 console.log(msg);
                 var msg = msg.data.msg;
@@ -71,7 +75,7 @@ angular.module('barangController', ['barangServices', 'angularUtils.directives.d
         
 
         app.updBarang = function(dataBarang){
-            console.log(dataBarang);
+            console.log(app.DataBarang);
         }
 
         app.getDetil = function(_id) {

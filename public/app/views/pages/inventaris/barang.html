@@ -50,8 +50,8 @@
                         <td>{{ data.lokasi.lokasi }}</td>
                         <td>{{ data.kondisi.baik}} | {{ data.kondisi.lengkap }}</td>
                         <td>{{ data.statusBarang.status }}</td>
-                        <td><a href="javascript:void(0);" ng-click="barang.hpsBarang(data._id)"> <i class="fa fa-trash"></i></a> | 
-                            <a href="javascript:void(0);" ng-click="barang.getEditBrg(data._id);"> <i class="fa fa-pencil"></i></a>
+                        <td style="text-align:center"><a href="javascript:void(0);" ng-click="barang.hpsBarang(data._id)" title="Hapus {{data.namaBarang}}"> <i class="fa fa-trash"></i></a> | 
+                            <a href="javascript:void(0);" ng-click="barang.getEditBrg(data._id);" title="Edit {{data.namaBarang}}"> <i class="fa fa-pencil"></i></a>
                         </td>
                     </tr>
                 </tbody>
