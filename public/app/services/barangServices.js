@@ -13,6 +13,12 @@ angular.module('barangServices', [])
             return $http.get('/api/barangs');
         }
 
+        // getBarang(_id)
+        barangFactory.getEditBrg = function(_id) {
+            // console.log(_id);
+            return $http.get('/api/barang/' + _id);
+        }
+
         return barangFactory;
     })
 

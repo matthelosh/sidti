@@ -12,7 +12,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 templateUrl: "app/views/pages/users.html",
                 controller: 'regCtrl',
                 controllerAs: 'register',
-                authenticated: true
+                // authenticated: true
             })
             .when('/profil', {
                 templateUrl: "app/views/pages/users/profile.html",

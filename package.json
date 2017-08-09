@@ -30,6 +30,7 @@
     "mongoose-title-case": "0.0.4",
     "mongoose-validator": "^1.3.2",
     "morgan": "^1.8.1",
+    "multer": "^1.3.0",
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",
     "slugify": "^1.1.0"

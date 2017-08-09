@@ -3,16 +3,18 @@ var mongoose = require('mongoose'),
 
     module.exports = function(penunjang) {
         var Kategori = new Schema({
+            _id: String,
             "namaKategori": String
         });
 
         var Lokasi = new Schema({
-            "kode": String,
+            _id: String,
             "namaLokasi": String
         });
 
 
         var Status = new Schema({
+            _id: String,
             status: String
         });
 

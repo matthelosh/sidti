@@ -11,7 +11,17 @@ var express = require('express'),
     router = express.Router(),
     api    = require('./app/routes/api')(router);
     path = require('path'),
+    multer = require('multer'),
+    storage = multer.diskStorage({
+      destination: function(req, res, cd) {
+        cb(null, barang.imgBarang+ '-' + Date.now());
+      }
+    }),
     morgan  = require('morgan');
+var upload = multer({
+  storage: storage,
+  limits: { fileSize: 10000000}
+}).single('myFile');
 
 db.dbconnect();
 

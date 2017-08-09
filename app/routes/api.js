@@ -20,7 +20,14 @@ module.exports = function(router){
     } else {
       user.save((err)=>{
         if(err){
-          res.json({ success: false, message:'Username or Email already exists' });
+          
+          if (err.errors.realname) {
+            res.json({ success: false, message:err.errors.realname.message });
+          } else if (err.errors.email) {
+            res.json({ success: false, message:err.errors.email.message });
+          } else if (err.errors.usename) {
+            res.json({ success: false, message:err.errors.username.message});
+          }
         }else{
           res.json({ success: true, message:'User created' });
         }
@@ -31,7 +38,7 @@ module.exports = function(router){
 
 // Login Route
   router.post('/authenticate', function(req, res){
-    User.findOne({ username: req.body.username}).select('email username password realname').exec(function(err,user){
+    User.findOne({ username: req.body.username}).select('email username password realname isAdmin').exec(function(err,user){
       if (err) throw err;
 
       if(!user){
@@ -46,7 +53,7 @@ module.exports = function(router){
         if(!validPassword) {
           res.json({ success: false, message:'Password is wrong'});
         } else {
-          var token = jwt.sign({ username: user.username, realname: user.realname, email: user.email }, secret, { expiresIn: '10h'} );
+          var token = jwt.sign({ username: user.username, realname: user.realname, email: user.email, isAdmin: user.isAdmin }, secret, { expiresIn: '10h'} );
           res.json({success: true, message: 'Pengguna boleh masuk. Sebentar . .', token: token});
         }
       }
@@ -106,6 +113,7 @@ module.exports = function(router){
 
   router.get('/lokasi', function(req, res) {
     Penunjang.Lokasi.find({}, function(err, lokasis){
+      // console.log(lokasis);
       res.json(lokasis);
     });
   });
@@ -122,15 +130,15 @@ module.exports = function(router){
     // console.log(req.body);
     // var slug = slugify(req.body.title);
     var barang = new Barang();
-    barang._id = req.body.idBarang;
+    barang._id = req.body._id;
     barang.namaBarang = req.body.namaBarang;
     barang.kategori = req.body.kategori;
     barang.lokasi = req.body.lokasi;
     barang.spesifikasi = req.body.spesifikasi;
     // barang.imgBarang = req.body.imgBarang;
-    barang.statusBarang = req.body.status;
+    barang.statusBarang = req.body.statusBarang;
     barang.kondisi = req.body.kondisi;
-    barang.keterangan = req.body.ketBarang;
+    barang.keterangan = req.body.keterangan;
     barang.save(function(err){
       if(err){
         // res.send(err);
@@ -148,13 +156,25 @@ module.exports = function(router){
   });
   
   router.get('/barangs', function(req, res){
-    Barang.find({}).populate('Kategori').exec(function(err, barangs) {
+    Barang.find({}).populate('kategori lokasi statusBarang').exec(function(err, barangs) {
       if (err) {
         res.json(err);
       } else {
-        console.log(barangs);
+        // console.log(barangs);
         res.json(barangs);
       }
+    });
+  });
+
+  router.get('/barang/:_id', function(req, res) {
+    var _id = req.params._id;
+    Barang.findOne({_id: _id}).populate('kategori lokasi statusBarang').exec(function(err, brg) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(brg);
+      }
+      
     });
   });
 

@@ -1,68 +1,10 @@
 angular.module('barangController', ['barangServices'])
-    .controller('brgCtrl', function($scope, $http, Barang, Penunjang){
-
+    .controller('brgCtrl', function($scope, $http, Barang, Penunjang, $window){
+        
         $scope.frmBarangShow = function(){
             $scope.frmBarang = !$scope.frmBarang;
         };
         $scope.orderProperty = 'namaBarang';
-        // $scope.barangs = [
-        //     {
-        //         kodeBarang: "pcmm0102",
-        //         namaBarang: "PC MM 102",
-        //         kategori: "Alat Praktek",
-        //         lokasi: "Lab IT 06",
-        //         kondisi: {
-        //             baik: "Rusak",
-        //             lengkap: "Lengkap"
-        //         },
-        //         status: "Dalam Perbaikan"
-        //     },
-        //     {
-        //         kodeBarang: "pcmm0103",
-        //         namaBarang: "PC MM 103",
-        //         kategori: "Alat Praktek",
-        //         lokasi: "Lab IT 06",
-        //         kondisi: {
-        //             baik: "Baik",
-        //             lengkap: "Lengkap"
-        //         },
-        //         status: "Siap"
-        //     },
-        //       {
-        //         kodeBarang: "dlsr05",
-        //         namaBarang: "Kamera DLSR d3300",
-        //         kategori: "Alat Praktek",
-        //         lokasi: "Lab Fotografi",
-        //         kondisi: {
-        //             baik: "Baik",
-        //             lengkap: "Lengkap"
-        //         },
-        //         status: "DIpinjam"
-        //     },
-        //     {
-        //         kodeBarang: "vidsd01",
-        //         namaBarang: "Kamera Video SD Sony 1000",
-        //         kategori: "Alat Praktek",
-        //         lokasi: "Lab Videografi",
-        //         kondisi: {
-        //             baik: "Baik",
-        //             lengkap: "Lengkap"
-        //         },
-        //         status: "Siap"
-        //     },
-        //     {
-        //         kodeBarang: "prnmm03",
-        //         namaBarang: "Printer L300",
-        //         kategori: "Alat Kantor",
-        //         lokasi: "Ruang Produksi",
-        //         kondisi: {
-        //             baik: "Baik",
-        //             lengkap: "Lengkap"
-        //         },
-        //         status: "Siap"
-        //     }
-
-        // ];
         $scope.orderBy = function(orderName) {
             if ($scope.orderProperty == orderName) {
                 $scope.orderProperty = '-' + orderName;
@@ -75,31 +17,70 @@ angular.module('barangController', ['barangServices'])
 
         // Controller for register Barang
         var app = this;
+       
+        this.showFrmBarang = function() {
+            $scope.frmTitle = 'Entry Data Barang';
+            $scope.submitTitle = "Simpan";
+            $("#frmBarang").modal();
+        };
         // app.info = "Informasi";
         this.regBarang = function(dataBarang) {
             Barang.create(app.dataBarang).then(function(msg) {
                 console.log(msg);
                 var msg = msg.data.msg;
                 app.info = msg;
-
-                // app.info = msg;
+                Barang.getAll();
+                app.dataBarang = '';
             });
-        }
-
+        };
         // Get All Barangs
         this.getBarangs = function() {
             Barang.getAll().then(function(barangs) {
-                console.log(barangs.data);
+                // console.log(barangs.data);
                 $scope.barangs = barangs.data;
+            });
+        };
+
+        this.getBarangs();
+
+
+        // Form Edit Barang
+        this.getEditBrg = function(data_id) {
+            Barang.getEditBrg(data_id).then(function(brgEdit) {
+                var brgEdit = brgEdit.data;
+                console.log(brgEdit);
+                // $scope.brgEdit = brgEdit;
+                app.editMode = true;
+                $scope.editBarang = brgEdit;
+                $scope.katSelected = brgEdit.kategori._id;
+                $scope.lokSelected = brgEdit.lokasi._id;
+                $scope.statSelected = brgEdit.statusBarang._id;
+                $scope.frmTitle = "Update Data " + brgEdit.namaBarang;
+                $scope.submitTitle = "Update";
+                app.dataBarang = brgEdit;
+                $("#frmBarang").modal();
+
+            });
+           
+        }
+
+        app.getDetil = function(_id) {
+            Barang.getEditBrg(_id).then(function(brgDetil) {
+                console.log(brgDetil.data);
+                $scope.brgDetil = brgDetil.data;
+                $("#modalDetil").modal();
             });
         }
 
-        this.getBarangs();
+        app.reload = function($location) {
+            window.location.reload();
+        }
 
         var getKategori = function() {
             Penunjang.getKategori().then(function(kategoris) {
                 // console.log(kategoris);
                 $scope.kategoris = kategoris.data;
+                
             });
         }
         getKategori();

@@ -2,6 +2,11 @@ angular.module('mainController', ['authServices'])
 
 .controller('mainCtrl', function(Auth, AuthToken, $timeout, $location, $scope, $route, $routeParams, $window,$rootScope, $interval){
     var app = this;
+
+    this.refesh = function(){
+        // $window.location.reload();
+        alert('refesh');
+    };
     app.checkSession = function() {
         if (Auth.isLoggedIn()) {
             // app.checkingSession = true;
@@ -9,6 +14,7 @@ angular.module('mainController', ['authServices'])
                 var token = $window.localStorage.getItem('token');
                 if (token == null){
                     $interval.cancel(interval);
+                    Auth.logout();
                 } else {
                     self.parseJwt = function(token) {
                         var base64Url = token.split('.')[1];
@@ -24,17 +30,55 @@ angular.module('mainController', ['authServices'])
                     if(timeCheck <= 5) {
                         console.log('token has expired');
                         $interval.cancel(interval);
-                        showModal();
+                        showModal(1);
                     }
+                    
                 }
             }, 2000);
         }
     };
 
-    // app.checkSession();
+    app.checkSession();
 
     
-    var showModal = function() {
+    var showModal = function(option) {
+        app.choiceMade = false;
+        app.modalHeader = undefined;
+        app.modalBody = undefined;
+        app.hideButton = false;
+
+        if(option === 1) {
+            app.modalHeader = 'Info Sesi';
+            app.modalBody = 'Sesi Anda akan segera berakhir. Waktu Anda tinggal: ' + timeCheck + ' detik. Apakah Anda ingin memperbarui sesi atau keluar sistem?';
+            $("#sessionModal").modal({backdrop: "static"});
+            $timeout(function() {
+                if (!app.choiceMade) {
+                    console.log('LOGED OUT!!!');
+                    $scope.mainSlide = "mainSlide";
+                    hideModal();
+                    Auth.logout();
+                }
+            }, 4000);
+        } else if (option === 2) {
+            app.hideButton = true;
+            app.modalHeader = "Keluar Sistem";
+            $("#sessionModal").modal({ backdrop: "static" });
+            $timeout(function() {
+                Auth.logout();
+                $location.path('/');
+                hideModal();
+                $scope.mainSlide = "mainSlide";
+                $window.location.reload();
+            }, 2000);
+        }
+        $timeout(function() {
+            if (!app.choiceMade) {
+                console.log("KELUAR DARI SISTEM!!");
+                hideModal();
+                Auth.logout();
+            }
+        }, 4000);
+
          var token = $window.localStorage.getItem('token');
          self.parseJwt = function(token) {
                         var base64Url = token.split('.')[1];
@@ -45,17 +89,27 @@ angular.module('mainController', ['authServices'])
         var timeStamp = Math.floor(Date.now() / 1000);
         var timeCheck = expireTime.exp - timeStamp;
 
-        
-        app.modalHeader = 'Info Sesi';
-        app.modalBody = 'Sesi Anda akan segera berakhir. Waktu Anda tinggal: ' + timeCheck + ' detik. Apakah Anda ingin memperbarui sesi atau keluar sistem?';
-        $("#sessionModal").modal({backdrop: "static"});
-        
+       
         
     };
     
+    app.renewSession = function() {
+        app.choiceMade = true;
+        console.log('Renw Session');
+        hideModal();
+    };
+    
+    app.endSession = function() {
+        app.choiceMade = true;
+        console.log('End Session');
+        hideModal();
+        Auth.logout();
+    };
     // };
 
-
+    var hideModal = function() {
+        $("#sessionModal").modal('hide');
+    }
 
     // app.loadme = false;
     $rootScope.$on('$routeChangeStart', function() {
@@ -69,7 +123,11 @@ angular.module('mainController', ['authServices'])
                 app.realname = data.data.realname;
                 app.username = data.data.username;
                 app.email = data.data.email;
-                app.loadme = true;
+                
+                if(data.data.isAdmin == true) {
+                    console.log('Anda Admin');
+                    app.loadme = true;
+                }
             });
             app.isLoggedIn = true;
             $scope.toggleClass = true;
@@ -107,13 +165,8 @@ angular.module('mainController', ['authServices'])
       });
     };
 
-    this.logout = function() {
-        Auth.logout();
-        $location.path('/logout');
-        $timeout(function(){
-            $location.path('/');
-            $window.location.reload();
-        }, 500);
+    app.logout = function() {
+       showModal(2);
     };
 
    $scope.sideToggle = function(){

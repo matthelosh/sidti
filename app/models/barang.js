@@ -12,24 +12,25 @@ var barangSchema = new Schema({
         required: true
     },
     kategori: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'kategori'
+        type: String,
+        // type: mongoose.Schema.Types.ObjectId,
+        ref: 'Kategori'
     },
     lokasi: {
         type: String,
-        ref: 'lokasi'
+        ref: 'Lokasi'
     },
     spesifikasi: String,
     imgBarang: String,
     statusBarang: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'statusBarang'
+        type: String,
+        ref: 'Status'
     },
     kondisi: {
-        lengkap: Boolean,
-        baik: Boolean
+        lengkap: String,
+        baik: String
     },
     keterangan: String
 });
 
-module.exports = mongoose.model("Barang", barangSchema, "barangs");
+module.exports = mongoose.model("Barang", barangSchema, "barang");

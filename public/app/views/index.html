@@ -83,7 +83,7 @@
 					<li><a href="/pengaturan" title="Pengaturan"><span class="fa fa-cogs"></span> Pengaturan</a></li>
 					<li><a href="/pengguna" title="Pengguna"><span class="fa fa-users"></span> Pengguna</a></li>
 					<li><a href="/inventaris" title="Inventaris"><span class="fa fa-archive"></span> Inventaris</a></li>
-					<li><a href="/sirkulasi" title="Sirkulasi Barang"><span class="fa fa-refresh"></span> Sirkulasi</a></li>
+					<li><a href="/sirkulasi" title="Sirkulasi Barang"><span class="fa fa-recycle"></span> Sirkulasi</a></li>
 					<li><a href="/cetak" title="Cetak Dokumen"><span class="fa fa-print"></span> Laporan</a></li>
 					<li><a href="#" ng-click="main.logout()" title="Keluar Sistem"><span class="fa fa-sign-out"></span> Keluar</a></li>
 				</ul>
@@ -91,7 +91,10 @@
 
 			<!-- Main Content  -->
 			<div class="col-sm-10 main" ng-class="mainClass ? 'mainShrink':'mainSlide'">
-				<div class="page {{pageClass}}" ng-view></div>
+				<div class="page {{pageClass}}" >
+					<div style="padding: 0 20px" ng-view>
+					</div>
+				</div>
 			</div>
 		</div>
 		<footer class="footer col-sm-12">
@@ -144,10 +147,11 @@
 					</div>
 					<div class="modal-body">
 						<p>{{ main.modalBody}} </p>
+						<div class = "dizzi-gillepsie" ng-show="main.hideButton"></div>
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-primary" ng-click="main.renewSession();" data-dismiss="modal">Iya</button>
-						<button class="btn btn-danger" ng-click="main.endSession();" data-dismiss="modal">Tidak</button>
+						<button class="btn btn-primary" ng-hide="main.hideButton" ng-click="main.renewSession();" data-dismiss="modal">Iya</button>
+						<button class="btn btn-danger" ng-hide="main.hideButton"  ng-click="main.endSession();" data-dismiss="modal">Tidak</button>
 					</div>
 				</div>
 			</div>
