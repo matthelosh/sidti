@@ -62,6 +62,7 @@ angular.module('mainController', ['authServices'])
         } else if (option === 2) {
             app.hideButton = true;
             app.modalHeader = "Keluar Sistem";
+            app.modalBody = "<h2>Tunggu Sebentar</h2>";
             $("#sessionModal").modal({ backdrop: "static" });
             $timeout(function() {
                 Auth.logout();
@@ -95,7 +96,7 @@ angular.module('mainController', ['authServices'])
     
     app.renewSession = function() {
         app.choiceMade = true;
-        console.log('Renw Session');
+        console.log('Renew Session');
         hideModal();
     };
     
@@ -123,6 +124,7 @@ angular.module('mainController', ['authServices'])
                 app.realname = data.data.realname;
                 app.username = data.data.username;
                 app.email = data.data.email;
+                app.pic = data.data.pic;
                 
                 if(data.data.isAdmin == true) {
                     console.log('Anda Admin');
@@ -157,6 +159,7 @@ angular.module('mainController', ['authServices'])
              $timeout(function() {
               app.loginData = '';
               $location.path('/profil');
+              
               $window.location.reload();
               app.checkingSession();
           }, 2000);

@@ -50,7 +50,7 @@
                         <td>{{ data.lokasi.lokasi }}</td>
                         <td>{{ data.kondisi.baik}} | {{ data.kondisi.lengkap }}</td>
                         <td>{{ data.statusBarang.status }}</td>
-                        <td style="text-align:center"><a href="javascript:void(0);" ng-click="barang.hpsBarang(data._id)" title="Hapus {{data.namaBarang}}"> <i class="fa fa-trash"></i></a> | 
+                        <td style="text-align:center"><a href="javascript:void(0);" ng-click="barang.delBarang(data._id)" title="Hapus {{data.namaBarang}}"> <i class="fa fa-trash"></i></a> | 
                             <a href="javascript:void(0);" ng-click="barang.getEditBrg(data._id);" title="Edit {{data.namaBarang}}"> <i class="fa fa-pencil"></i></a>
                         </td>
                     </tr>
@@ -71,7 +71,7 @@
                 <h3>Formulir {{ frmTitle }}</h3>
             </div>
             <div class="modal-body">
-                <form class="form">
+                <form class="form" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-sm-7">
                             
@@ -98,7 +98,7 @@
                             <div class="form-group">
                                 <label for="imgBarang">Gambar Barang:</label>
                                     
-                                <input ng-model="barang.dataBarang.imgBarang" class="form-control input-sm" type="file" id="imgBarang" placeholder="ID Barang">
+                                <input file-model="barang.dataBarang.imgBarang" name="imgBarang" class="form-control input-sm" type="file" id="imgBarang" placeholder="ID Barang">
                                    
                             </div>
 
@@ -124,21 +124,21 @@
                             
                             <div class="form-group">
                                 <label for="kategori">Kategori</label>
-                                <select class="form-control input-sm" id="kategori" ng-model="katSelected" ng-options="kategori._id as kategori.namaKategori for kategori in kategoris">
+                                <select class="form-control input-sm" id="kategori" ng-model="barang.dataBarang.kategori" ng-options="kategori._id as kategori.namaKategori for kategori in kategoris">
                                     <option value="" selected> -Pilih Kategori- </option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="lokasi">Lokasi</label>
-                                <select class="form-control input-sm" id="lokasi" ng-model="lokSelected" ng-options="lokasi._id as lokasi.lokasi for lokasi in lokasis">
+                                <select class="form-control input-sm" id="lokasi" ng-model="barang.dataBarang.lokasi" ng-options="lokasi._id as lokasi.lokasi for lokasi in lokasis">
                                     <option value="" selected> -Pilih Lokasi Barang- </option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="status">Status</label>
-                                <select class="form-control input-sm" id="status" ng-model="statSelected" ng-options="status._id as status.status for status in statuses">
+                                <select class="form-control input-sm" id="status" ng-model="barang.dataBarang.statusBarang" ng-options="status._id as status.status for status in statuses">
                                     <option value="" selected> -Pilih Status Barang- </option>
                                 </select>
                             </div>
@@ -148,7 +148,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <button class="btn btn-primary center-block" ng-show="barang.addBarang" ng-click="barang.regBarang(dataBarang)" type="submit">{{submitTitle}}</button>
-                            <button class="btn btn-danger center-block" ng-show="barang.editBarang" ng-click="barang.updBarang(dataBarang)" type="submit">{{submitTitle}}</button>
+                            <button class="btn btn-primary center-block" ng-show="barang.editBarang" ng-click="barang.updBarang(dataBarang)" type="submit">{{submitTitle}}</button>
                         </div>
                     </div>
                     <br>
@@ -157,6 +157,7 @@
                             <div class="alert alert-info" >
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                 <h4>Info: <small><br>{{ barang.info }}</small></h4>
+                                <p>{{barang.dataBarang}}</p>
                             </div>
                         </div>
                         
@@ -170,6 +171,7 @@
         </div> <!-- Modal COntent   -->
      </div>   
 </div><!-- End AddBarangModal -->
+   
 
 <div class="modal fade" role="dialog" id="modalDetil">
     <div class="modal-dialog" style="width:60%">
@@ -179,7 +181,7 @@
                 <h3>Informasi Detil <small>{{brgDetil.namaBarang}}</small></h3>
             </div>
             <div class="modal-body">
-                <img src="assets/img/uploads/pic.jpg" alt="{{brgDetil._id}}" class="img-responsive img-rounded img-thumbnail center-block" width="300px">
+                <img src="assets/img/uploads/{{brgDetil.imgBarang}}" alt="{{brgDetil.imgBarang}}" class="img-responsive img-rounded img-thumbnail center-block" width="150px">
                 <br>
                 <table class="table table-striped" style="box-shadow: none!important">
                     <tr><td>Kode Barang: </td><td>{{ brgDetil._id }}</td></tr> 
@@ -193,5 +195,24 @@
                 <p>Detil Barang <strong>{{ brgDetil.namaBarang}}</strong></p>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="modalKonfirm">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Konfirmasi</h2>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-center">Apakah Anda yakin mau menghapus data: {{dataId}}?</h4>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" data-dismiss="modal">Tidak Jadi</button>
+                <button class="btn btn-danger" ng-model="dataId" ng-click="barang.hpsBarang(dataId)">HAPUS</button>
+            </div>
+        </div>
+        
+
     </div>
 </div>

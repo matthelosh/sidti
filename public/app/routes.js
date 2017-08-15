@@ -7,7 +7,8 @@ var app = angular.module('appRoutes', ['ngRoute'])
             })
 
             .when('/about', {
-                templateUrl: "app/views/pages/about.html"
+                templateUrl: "app/views/pages/about.html",
+                authenticated: false
             })
             .when('/pengguna', {
                 templateUrl: "app/views/pages/users.html",

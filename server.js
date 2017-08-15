@@ -9,37 +9,18 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     db      = require('./config/db'),
     router = express.Router(),
-    api    = require('./app/routes/api')(router);
     path = require('path'),
     multer = require('multer'),
-    storage = multer.diskStorage({
-      destination: function(req, res, cd) {
-        cb(null, barang.imgBarang+ '-' + Date.now());
-      }
-    }),
+    api    = require('./app/routes/api')(router);
     morgan  = require('morgan');
-var upload = multer({
-  storage: storage,
-  limits: { fileSize: 10000000}
-}).single('myFile');
+
 
 db.dbconnect();
 
 app.use(morgan('dev'));
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static(__dirname + '/public'));
-
-
-
-// mongoose.Promise = global.Promise;
-// mongoose.connect('mongodb://127.0.0.1:27017/numii', function(err){
-//   if (err){
-//     console.log('Not Connected to DB'+ err);
-//   }else {
-//     console.log('Connected to DB');
-//   }
-// });
 
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname + '/public/app/views/index.html'));
@@ -48,9 +29,9 @@ app.get('/', function(req, res){
 app.use('/api', api);
 
 app.get('*', function(req, res, next) {
-
   res.sendFile(path.resolve(__dirname + '/public/app/views/index.html'));
 });
+
 app.listen(port, function() {
   console.log('Running on port ' + port);
 });

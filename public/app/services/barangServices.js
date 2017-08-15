@@ -5,7 +5,14 @@ angular.module('barangServices', [])
         // Barang.create(dataBarang);
         barangFactory.create = function(dataBarang) {
             // console.log(dataBarang);
-            return $http.post('/api/barang', dataBarang);
+            var fd = new FormData();
+            for(var key in dataBarang)
+                fd.append (key, dataBarang[key]);
+
+            return $http.post('/api/barang', fd, {
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            });
         };
 
         // Barang.getAll();
@@ -17,6 +24,21 @@ angular.module('barangServices', [])
         barangFactory.getEditBrg = function(_id) {
             // console.log(_id);
             return $http.get('/api/barang/' + _id);
+        }
+
+        barangFactory.updBarang = function(dataBarang) {
+            var fd = new FormData();
+            for(var key in dataBarang)
+                fd.append (key, dataBarang[key]);
+
+            return $http.post('/api/updBarang', fd, {
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            });
+        };
+
+        barangFactory.hpsBarang = function(_id) {
+            return $http.delete('/api/barang/'+ _id);
         }
 
         return barangFactory;

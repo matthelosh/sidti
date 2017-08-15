@@ -4,8 +4,8 @@ var mongoose = require('mongoose'),
 var barangSchema = new Schema({
     _id : {
         type: String,
-        required: true,
-        unique: true
+        // required: true,
+        // unique: true
     },
     namaBarang: {
         type: String,

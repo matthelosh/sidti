@@ -43,6 +43,7 @@ var UserSchema = new Schema({
   realname: { type: String, required: true, validate: nameValidator},
   password: { type: String, required: true},
   email: { type: String, required: true, lowercase: true, unique: true, validate: emailValidator },
+  pic: String,
   isAdmin: {type: Boolean, default: false}
 });
 

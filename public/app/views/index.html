@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="assets/css/bootstrap.css">
 		<link rel="stylesheet" href="assets/css/font-awesome.css">
 		<link rel="stylesheet" href="assets/css/sidti.css">
-		<link rel="icon" href="assets/img/logo.png" type="image/png">
+		<link rel="icon" href="assets/img/logo-white-text.png" type="image/png">
 		
 		<!-- Main Angular JS -->
 		<script src="assets/js/angular.min.js"></script>
@@ -37,8 +37,14 @@
 		<script src="app/services/authServices.js"></script>
 		<script src="app/services/barangServices.js"></script>
 
+		<!-- App Directives -->
+		<script src="app/directives/fileModel.js"></script>
+
 		<!-- AngularJS Pagination Plugin  -->
 		<script src="assets/js/dirPagination.js"></script>
+
+		<!-- Angular ng-upload  -->
+		<!-- <script src="assets/js/ng-file-upload.min.js"></script> -->
 
 		<!-- Angular-UI-Bootstrap -->
 		<!--<script src="http://angular-ui.github.com/bootstrap/ui-bootstrap-tpls-0.2.0.js"></script>-->
@@ -53,8 +59,8 @@
 						</span>
 					</button>
 					<a class="navbar-brand" href="/" title="SIDTI">
-					<img src="assets/img/logo.png" height="20px" style="float: left; line-height: 50px;">
-					&nbsp; Siidti
+					<img src="assets/img/logo-white-text.png" height="20px" style="float: left; line-height: 50px;">
+					&nbsp; S.I.T.I.
 					</a>
 				</div>
 				<span class="nav navbar-nav navbar-left" id="sideToggle" >
@@ -79,7 +85,7 @@
 			<div class="col-sm-2 side" ng-class="sideClass ? 'sideHide' : 'sideShow'">
 				<!-- Gravatar User  -->
 				<div class="gravatar">
-					<img class="grav-img" src="assets/img/profil/kuncen.png" alt="Foto Profil" width="100%">
+					<img class="grav-img" src="assets/img/profil/{{main.pic}}" alt="Foto Profil" width="100%">
 					<p class="gravatarName"><a href="/profil" title="Detail Pengguna">{{main.realname}}</a></p>
 				</div>
 				<ul class="nav nav-stacked">
